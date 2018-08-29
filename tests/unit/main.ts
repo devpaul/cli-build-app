@@ -482,4 +482,10 @@ describe('command', () => {
 			);
 		});
 	});
+
+	describe('override', () => {
+		it('sets a single feature to the webpack configuration', () => {});
+
+		it('appends a feature to the webpack config', () => {});
+	});
 });

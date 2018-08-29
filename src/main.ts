@@ -202,17 +202,22 @@ const command: Command = {
 			default: false,
 			type: 'boolean'
 		});
+
+		options('override', {
+			describe: 'override configuration values'
+		});
 	},
 	run(helper: Helper, args: any) {
 		console.log = () => {};
 		const rc = helper.configuration.get() || {};
 		let config: webpack.Configuration;
+		const joinedArgs = { ...rc, ...args, ...args.override };
 		if (args.mode === 'dev') {
-			config = devConfigFactory({ ...rc, ...args });
+			config = devConfigFactory(joinedArgs);
 		} else if (args.mode === 'test') {
-			config = testConfigFactory({ ...rc, ...args });
+			config = testConfigFactory(joinedArgs);
 		} else {
-			config = distConfigFactory({ ...rc, ...args });
+			config = distConfigFactory(joinedArgs);
 		}
 
 		if (args.serve) {
